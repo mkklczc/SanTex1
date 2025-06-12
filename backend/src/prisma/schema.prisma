@@ -8,133 +8,74 @@ datasource db {
 }
 
 model User {
-  id            String     @id @default(uuid()) @db.Uuid
-  full_name     String     @db.VarChar
-  login         String     @unique @db.VarChar
-  password_hash String     @db.VarChar
-  email         String     @db.VarChar
-  created_at    DateTime   @default(now()) @db.Timestamp
+  id            String    @id @default(uuid()) @db.Uuid
+  full_name     String    @db.VarChar(255)
+  login         String    @unique @db.VarChar(100)
+  password_hash String    @db.VarChar(255)
+  email         String    @unique @db.VarChar(255)
+  created_at    DateTime  @default(now()) @db.Timestamp(6)
+  roleId        String    @db.Uuid
 
-  tickets       Ticket[]
-  comments      Comment[]
-  operator      Operator?
+  role          Role      @relation(fields: [roleId], references: [id])
+  works         Work[]
 }
 
-model Operator {
-  id         String         @id @default(uuid()) @db.Uuid
-  user_id    String         @unique @db.Uuid
-  role_id    String         @db.Uuid
-  created_at DateTime       @default(now()) @db.Timestamp
+model Role {
+  id          String   @id @default(uuid()) @db.Uuid
+  name        String   @unique @db.VarChar(100)
+  description String?  @db.VarChar(255)
 
-  user       User           @relation(fields: [user_id], references: [id])
-  role       OperatorRole   @relation(fields: [role_id], references: [id])
-  responses  Response[]
-  assigned_tickets Ticket[] @relation("AssignedOperator")
+  users       User[]
 }
 
-model OperatorRole {
-  id          String     @id @default(uuid()) @db.Uuid
-  name        String     @unique @db.VarChar
-  description String     @db.Text
-
-  operators   Operator[]
+model Material {
+  id           String   @id @default(cuid()) @db.VarChar(36)
+  name         String   @db.VarChar(255)
+  type         String   @db.VarChar(100)
+  manufacturer String   @db.VarChar(100)
+  unit         String   @db.VarChar(20)
+  unitPrice    Float    @db.Real
+  tags         String[] // PostgreSQL поддерживает массив строк
+  notes        String?  @db.Text
+  createdAt    DateTime @default(now()) @db.Timestamp(6)
+  updatedAt    DateTime @updatedAt @db.Timestamp(6)
 }
 
-model Ticket {
-  id                   String           @id @default(uuid()) @db.Uuid
-  user_id              String           @db.Uuid
-  status_id            String           @db.Uuid
-  category_id          String           @db.Uuid
-  assigned_operator_id String?          @db.Uuid
-  created_at           DateTime         @default(now()) @db.Timestamp
-  updated_at DateTime @default(now()) @updatedAt @db.Timestamp
-
-  user                 User             @relation(fields: [user_id], references: [id])
-  status               TicketStatus     @relation(fields: [status_id], references: [id])
-  category             TicketCategory   @relation(fields: [category_id], references: [id])
-  assigned_operator    Operator?        @relation("AssignedOperator", fields: [assigned_operator_id], references: [id])
-
-  field_values         TicketFieldValue[]
-  attachments          Attachment[]
-  comments             Comment[]
-  responses            Response[]
+model Equipment {
+  id           String   @id @default(cuid()) @db.VarChar(36)
+  name         String   @db.VarChar(255)
+  type         String   @db.VarChar(100)
+  manufacturer String   @db.VarChar(100)
+  unit         String   @db.VarChar(20)
+  unitPrice    Float    @db.Real
+  tags         String[]
+  status       String   @db.VarChar(50)
+  quantity     Int      @db.Integer
+  createdAt    DateTime @default(now()) @db.Timestamp(6)
+  updatedAt    DateTime @updatedAt @db.Timestamp(6)
 }
 
-model TicketStatus {
-  id     String    @id @default(uuid()) @db.Uuid
-  name   String    @db.VarChar
+model ConstructionObject {
+  id        String   @id @default(cuid()) @db.VarChar(36)
+  name      String   @db.VarChar(255)
+  location  String   @db.VarChar(255)
+  createdAt DateTime @default(now()) @db.Timestamp(6)
+  updatedAt DateTime @updatedAt @db.Timestamp(6)
 
-  tickets Ticket[]
+  works     Work[]
 }
 
-model TicketCategory {
-  id         String        @id @default(uuid()) @db.Uuid
-  name       String        @db.VarChar
-  created_at DateTime      @default(now()) @db.Timestamp
+model Work {
+  id                  String   @id @default(cuid()) @db.VarChar(36)
+  description         String   @db.Text
+  startDate           DateTime @db.Timestamp(6)
+  endDate             DateTime @db.Timestamp(6)
+  status              String   @db.VarChar(50)
+  createdAt           DateTime @default(now()) @db.Timestamp(6)
+  updatedAt           DateTime @updatedAt @db.Timestamp(6)
+  userId              String   @db.Uuid
+  constructionObjectId String  @db.VarChar(36)
 
-  tickets    Ticket[]
-  fields     TicketField[]
-}
-
-enum FieldType {
-  input
-  select
-  date
-}
-
-model TicketField {
-  id          String        @id @default(uuid()) @db.Uuid
-  category_id String        @db.Uuid
-  field_name  String        @db.VarChar
-  field_label String        @db.VarChar
-  field_type  FieldType
-  is_required Boolean
-  options     Json?
-  placeholder String?       @db.VarChar
-  field_order Int           @db.Integer
-
-  category    TicketCategory @relation(fields: [category_id], references: [id])
-  values      TicketFieldValue[]
-}
-
-model TicketFieldValue {
-  id        String        @id @default(uuid()) @db.Uuid
-  ticket_id String        @db.Uuid
-  field_id  String        @db.Uuid
-  value     String        @db.Text
-
-  ticket    Ticket        @relation(fields: [ticket_id], references: [id])
-  field     TicketField   @relation(fields: [field_id], references: [id])
-}
-
-model Attachment {
-  id         String     @id @default(uuid()) @db.Uuid
-  ticket_id  String     @db.Uuid
-  file_name  String     @db.VarChar
-  file_url   String     @db.VarChar
-  created_at DateTime   @default(now()) @db.Timestamp
-
-  ticket     Ticket     @relation(fields: [ticket_id], references: [id])
-}
-
-model Comment {
-  id         String     @id @default(uuid()) @db.Uuid
-  ticket_id  String     @db.Uuid
-  user_id    String     @db.Uuid
-  content    String     @db.Text
-  created_at DateTime   @default(now()) @db.Timestamp
-
-  ticket     Ticket     @relation(fields: [ticket_id], references: [id])
-  user       User       @relation(fields: [user_id], references: [id])
-}
-
-model Response {
-  id          String     @id @default(uuid()) @db.Uuid
-  ticket_id   String     @db.Uuid
-  operator_id String     @db.Uuid
-  content     String     @db.Text
-  created_at  DateTime   @default(now()) @db.Timestamp
-
-  ticket      Ticket     @relation(fields: [ticket_id], references: [id])
-  operator    Operator   @relation(fields: [operator_id], references: [id])
+  user                User     @relation(fields: [userId], references: [id])
+  constructionObject  ConstructionObject @relation(fields: [constructionObjectId], references: [id])
 }
