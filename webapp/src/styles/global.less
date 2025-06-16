@@ -1,108 +1,34 @@
 @import './variables.less';
 
+@defaultFontFamily: 'your-font-family';
+@defaultFontSize: 'your-font-size';
+@defaultBackgroundColor: 'your-background-color';
+@defaultTextColor: 'your-text-color';
+@defaultLineHeight: 'your-line-height';
+
+html,
+body,
+#root {
+    height: 100%;
+    min-height: 100%;
+    width: 100%;
+    position: relative;
+}
+
 body {
-  margin: 0;
-  padding: 0;
-  font-family: @font-family;
-  font-size: @font-size-base;
-  line-height: @line-height-base;
-  background-color: @background-color;
-  color: @text-color;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+    font-family: @defaultFontFamily;
+    font-size: @defaultFontSize;
+    background: @defaultBackgroundColor;
+    color: @defaultTextColor;
+    line-height: @defaultLineHeight;
 }
 
-.ant-layout {
-  background: @background-color !important;
+*,
+*:before,
+*:after {
+    box-sizing: border-box;
 }
 
-.ant-btn {
-  height: 40px;
-  padding: 0 @spacing-md;
-  font-weight: 500;
-  border-radius: @border-radius-base;
-  transition: @transition-base;
-  
-  &-primary {
-    background: @primary-color;
-    border-color: @primary-color;
-    box-shadow: 0 2px 4px rgba(255, 111, 0, 0.2);
-
-    &:hover {
-      background: @primary-light;
-      border-color: @primary-light;
-      transform: translateY(-1px);
-      box-shadow: 0 4px 6px rgba(255, 111, 0, 0.25);
-    }
-
-    &:active {
-      background: @primary-dark;
-      border-color: @primary-dark;
-      transform: translateY(0);
-    }
-  }
-}
-
-.ant-table {
-  background: white;
-  border-radius: @border-radius-lg;
-  box-shadow: @shadow-md;
-  margin-top: @spacing-lg;
-
-  .ant-table-thead > tr > th {
-    background: #fafafa;
-    color: @text-light;
-    font-weight: 600;
-    padding: @spacing-md @spacing-sm;
-    
-    &:before {
-      display: none;
-    }
-  }
-
-  .ant-table-tbody > tr {
-    cursor: pointer;
-    transition: @transition-fast;
-
-    > td {
-      padding: @spacing-md @spacing-sm;
-    }
-
-    &:hover {
-      background: fade(@primary-color, 3%);
-    }
-  }
-}
-
-.ant-form {
-  .ant-form-item {
-    margin-bottom: @spacing-lg;
-    
-    &-label > label {
-      color: @text-light;
-      font-weight: 500;
-      font-size: @font-size-base;
-      height: 28px;
-    }
-  }
-
-  .ant-input,
-  .ant-select-selector,
-  .ant-picker {
-    padding: @spacing-sm;
-    border-radius: @border-radius-base;
-    border-color: @border-color;
-    transition: @transition-base;
-    background: #fff;
-
-    &:hover {
-      border-color: @primary-light;
-    }
-
-    &:focus,
-    &-focused {
-      border-color: @primary-color;
-      box-shadow: 0 0 0 3px fade(@primary-color, 15%);
-    }
-  }
+a {
+    text-decoration: none;
 }

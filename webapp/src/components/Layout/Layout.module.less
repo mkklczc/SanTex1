@@ -1,93 +1,131 @@
-@import '../../styles/variables.less';
+
+@defaultFontFamily: 'Roboto', sans-serif;
+@defaultFontSize: '14px';
+@defaultBackgroundColor: #f4f5f7;
+@defaultTextColor: #333;
+@defaultLineHeight: '1.5';
+
+@breakpoint: 900px;
+@primaryColor: #6A0DAD;
+@secondaryColor: #f4f5f7;
+@hoverColor: #e9ecef;
+@borderColor: #dee2e6;
+
+html,
+body,
+#root {
+    height: 100%;
+    min-height: 100%;
+    width: 100%;
+    position: relative;
+}
+
+body {
+    font-family: @defaultFontFamily;
+    font-size: @defaultFontSize;
+    background: @defaultBackgroundColor;
+    color: @defaultTextColor;
+    line-height: @defaultLineHeight;
+}
+
+*,
+*:before,
+*:after {
+    box-sizing: border-box;
+}
+
+a {
+    text-decoration: none;
+}
 
 .layout {
-  min-height: 100vh;
-  background: @background-color;
-
-  &__header {
     display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background: linear-gradient(to right, #ff6f00, #ff9e40);
-    padding: 0 @spacing-xxl;
-    height: 56px;
-    color: white;
-    box-shadow: 0 2px 8px rgba(183, 28, 28, 0.2);
-    position: relative;
-    z-index: 10;
-  }
-
-  &__title {
-    font-size: 18px;
-    font-weight: 500;
-    color: white;
-    letter-spacing: 0.3px;
-    margin-right: @spacing-xxl;
-  }
-
-  &__nav {
-    display: flex;
-    gap: 1px;
+    flex-flow: row nowrap;
     height: 100%;
-  }
+    background-color: @defaultBackgroundColor;
 
-  &__navItem {
-    color: rgba(255, 255, 255, 0.9);
-    padding: 0 @spacing-xl;
-    transition: all 0.2s ease;
-    font-weight: 500;
-    text-decoration: none;
-    font-size: 14px;
-    display: flex;
-    align-items: center;
-    height: 100%;
-    position: relative;
-
-    &:hover {
-      color: white;
-      background: rgba(255, 255, 255, 0.1);
+    @media (max-width: @breakpoint) {
+        flex-flow: column nowrap;
     }
 
-    &_active {
-      color: white;
-      background: rgba(255, 255, 255, 0.15);
-
-      &:after {
-        content: '';
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        height: 3px;
-        background: white;
-      }
+    .layout__header {
+        background-color: @primaryColor;
+        color: white;
+        padding: 10px 20px;
+        font-size: 16px;
+        font-weight: bold;
     }
-  }
 
-  &__user {
-    font-size: @font-size-lg;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    width: 36px;
-    height: 36px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%;
-    color: rgba(255, 255, 255, 0.9);
-    margin-left: @spacing-xl;
+    .layout__nav {
+        display: flex;
+        flex-direction: column;
+        margin-top: 35px;
 
-    &:hover {
-      color: white;
-      background: rgba(255, 255, 255, 0.1);
+        .layout__navItem {
+            padding: 10px 20px;
+            color: @secondaryColor;
+            font-size: 14px;
+            text-transform: uppercase;
+            font-weight: 500;
+            border-radius: 4px;
+            margin-bottom: 10px;
+            transition: all 0.3s ease;
+
+            &:hover {
+                background-color: @hoverColor;
+                color: @primaryColor;
+            }
+
+            &.layout__navItem_active {
+                background-color: @primaryColor;
+                color: white;
+            }
+        }
     }
-  }
 
-  &__content {
-    padding: @spacing-xl @spacing-xxl;
-    margin: 0 auto;
-    width: 100%;
-    box-sizing: border-box;
-    background: transparent;
-  }
+    .layout__user {
+        display: flex;
+        align-items: center;
+        margin-top: 20px;
+        cursor: pointer;
+
+        svg {
+            font-size: 20px;
+            margin-right: 10px;
+        }
+
+        &:hover {
+            opacity: 0.8;
+        }
+    }
+
+    .layout__content {
+        height: 100%;
+        overflow: auto;
+        flex: 1 1 100%;
+        padding: 20px 30px;
+        background-color: white;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
+        @media (max-width: @breakpoint) {
+            padding: 15px;
+        }
+    }
+}
+
+.title {
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 20px;
+    color: @secondaryColor;
+}
+
+@media (max-width: @breakpoint) {
+    .layout {
+        flex-direction: column;
+    }
+
+    .layout__header {
+        font-size: 18px;
+    }
 }

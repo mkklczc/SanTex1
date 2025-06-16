@@ -1,0 +1,32 @@
+@import './variables.less';
+
+@blue: #0000FF;
+@red: #FF0000;
+
+
+.link(@color: @blue, @hoverColor: @red) {
+    color: @color;
+    transition: color 200ms ease;
+    &:hover,
+    &:active {
+        color: @hoverColor;
+        transition: none;
+    }
+}
+
+.h1 {
+    font-size: 30px;
+    font-weight: bold;
+}
+
+.h2 {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+// media query mixin
+.media(@max-width) {
+    @media screen and (max-width: @max-width) {
+        @content;
+    }
+}

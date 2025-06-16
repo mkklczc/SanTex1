@@ -1,13 +1,13 @@
-@primary-color: #ff6f00;
-@primary-light: #ff9e40;
-@primary-dark: #c43e00;
+@primary-color: #6A0DAD;
+@primary-light: #184984;
+@primary-dark: #7900c4;
 @background-color: #fff8f3;
 @text-color: #2d3748;
 @text-light: #4a5568;
 @border-color: #edf2f7;
 @success-color: #48bb78;
-@warning-color: #ed8936;
-@error-color: #f56565;
+@warning-color: #b636ed;
+@error-color: #c065f5;
 
 @font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
 @font-size-base: 14px;
@@ -32,3 +32,29 @@
 
 @transition-base: all 0.2s ease-in-out;
 @transition-fast: all 0.15s ease-in-out;
+
+.link() {
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+  transition: color 0.2s ease;
+  
+  &:hover {
+    color: blue; /* или другой цвет при наведении */
+  }
+}
+.h1 {
+    font-size: 30px;
+    font-weight: bold;
+}
+
+@white: #fff;
+@black: #000;
+@blue: #00c;
+@red: #c00;
+
+@defaultFontFamily: 'Helvetica', 'Arial', sans-serif;
+@defaultFontSize: 14px;
+@defaultBackgroundColor: @white;
+@defaultTextColor: @black;
+@defaultLineHeight: 1.2;

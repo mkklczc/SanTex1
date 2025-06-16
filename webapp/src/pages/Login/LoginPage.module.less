@@ -3,28 +3,23 @@
   height: 100vh;
   margin: 0;
   padding: 0;
-  background: #f0f2f5;
-  background-image: url('../../assets/LoginBackground.jpeg');
-  background-repeat: no-repeat;
-  background-size: cover;
+  background-image: url('../../assets/Fon.jpg'); /* Убираем картинку и ставим однотонный фон */
   align-items: center;
   justify-content: center;
-  gap: 0; 
+  gap: 0;
 }
 
 .leftPane,
 .rightPane {
-  height: 90vh;
+  height: auto; /* Убираем фиксированную высоту, чтобы форма могла быть гибкой */
+  width: auto;  /* Адаптируем ширину */
   border-radius: 12px;
   overflow: hidden;
   box-shadow: 0 4px 24px rgba(0, 0, 0, 0.1);
 }
 
 .leftPane {
-  width: 1700px;
-  background-image: linear-gradient(to right, rgba(0,0,0,0.3), rgba(0,0,0,0.1)), url('../../assets/Gorny.jpg');
-  background-size: cover;
-  background-position: center;
+  display: none; /* Убираем левую панель с картинкой */
 }
 
 .rightPane {
@@ -34,6 +29,8 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
+  max-width: 100%;
 }
 
 .loginBox {

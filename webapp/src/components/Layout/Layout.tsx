@@ -1,47 +1,109 @@
-import { UserOutlined, LogoutOutlined } from '@ant-design/icons'
-import { Layout as AntLayout, Tooltip } from 'antd'
-import React, { ReactNode } from 'react'
+import { UserOutlined, LogoutOutlined, MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons'
+import { Layout as AntLayout, Tooltip, Button } from 'antd'
+import React, { ReactNode, useState, useEffect } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
-import GornyEmblem from '../../assets/GornyEmblem.svg?react'
+import {
+  getAllAppRoute,
+  getAllMaterialsRoute,
+  getEquipmentRoute,
+  getWorksRoute,
+  getObjectsRoute,
+  getReportsRoute,
+  getSettingsRoute,
+} from '../../lib/routes'
+
 import styles from './Layout.module.less'
 
-const { Header, Content } = AntLayout
+const { Sider, Content } = AntLayout
 
-type ISupportLayout = {
+type ILayout = {
   children: ReactNode
 }
 
-export const SupportLayout: React.FC<ISupportLayout> = ({ children }) => {
+export const Layout: React.FC<ILayout> = ({ children }) => {
   const location = useLocation()
   const navigate = useNavigate()
+  const [collapsed, setCollapsed] = useState(false)
+  const [isMobile, setIsMobile] = useState(false)
 
   const handleLogout = () => {
     localStorage.removeItem('token')
     navigate('/login')
   }
 
+  const handleCollapse = (collapsed: boolean) => {
+    setCollapsed(collapsed)
+  }
+
+  // Handle window resize
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 992) // Adjust this width according to your design needs
+    }
+
+    // Initialize the state on component mount
+    handleResize()
+
+    // Add event listener on window resize
+    window.addEventListener('resize', handleResize)
+
+    // Clean up the event listener when component unmounts
+    return () => window.removeEventListener('resize', handleResize)
+  }, [])
+
   return (
     <AntLayout className={styles.layout}>
-      <Header className={styles.layout__header}>
-        <GornyEmblem style={{ marginTop: '6px' }} />
+      <Sider
+        className={styles.layout__header}
+        collapsible
+        collapsed={collapsed}
+        onCollapse={handleCollapse}
+        breakpoint="lg"
+        collapsedWidth="0"
+        trigger={null}
+      >
         <div className={styles.layout__nav}>
           <Link
-            to="/"
-            className={`${styles.layout__navItem} ${location.pathname === '/' ? styles.layout__navItem_active : ''}`}
+            to={getAllAppRoute()}
+            className={`${styles.layout__navItem} ${location.pathname === getAllAppRoute() ? styles.layout__navItem_active : ''}`}
           >
-            Обратиться за помощью
+            Главная страница
           </Link>
           <Link
-            to="/my-tickets"
-            className={`${styles.layout__navItem} ${location.pathname === '/my-tickets' ? styles.layout__navItem_active : ''}`}
+            to={getAllMaterialsRoute({ sanTex: 'materials' })}
+            className={`${styles.layout__navItem} ${location.pathname === getAllMaterialsRoute({ sanTex: 'materials' }) ? styles.layout__navItem_active : ''}`}
           >
-            Мои обращения
+            Материалы
           </Link>
           <Link
-            to="/faq"
-            className={`${styles.layout__navItem} ${location.pathname === '/faq' ? styles.layout__navItem_active : ''}`}
+            to={getEquipmentRoute()}
+            className={`${styles.layout__navItem} ${location.pathname === getEquipmentRoute() ? styles.layout__navItem_active : ''}`}
           >
-            FAQ
+            Оборудование
+          </Link>
+          <Link
+            to={getWorksRoute()}
+            className={`${styles.layout__navItem} ${location.pathname === getWorksRoute() ? styles.layout__navItem_active : ''}`}
+          >
+            Работы
+          </Link>
+          <Link
+            to={getObjectsRoute()}
+            className={`${styles.layout__navItem} ${location.pathname === getObjectsRoute() ? styles.layout__navItem_active : ''}`}
+          >
+            Объекты
+          </Link>
+          <Link
+            to={getReportsRoute()}
+            className={`${styles.layout__navItem} ${location.pathname === getReportsRoute() ? styles.layout__navItem_active : ''}`}
+          >
+            Отчёты
+          </Link>
+          <Link
+            to={getSettingsRoute()}
+            className={`${styles.layout__navItem} ${location.pathname === getSettingsRoute() ? styles.layout__navItem_active : ''}`}
+          >
+            Настройки
           </Link>
         </div>
         <div style={{ display: 'flex', alignItems: 'center' }}>
@@ -54,10 +116,32 @@ export const SupportLayout: React.FC<ISupportLayout> = ({ children }) => {
             </Tooltip>
           </div>
         </div>
-      </Header>
+      </Sider>
+
+      {/* Only show the toggle button on smaller screens */}
+      {isMobile && (
+        <div className={styles.layout__toggleButton}>
+          <Button
+            type="text"
+            icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
+            onClick={() => setCollapsed(!collapsed)}
+            style={{
+              position: 'absolute',
+              top: 16,
+              left: 16,
+              fontSize: '20px', // Smaller icon size
+              marginLeft: '-13px',
+              color: 'white', // White color for the icon
+              background: 'transparent', // Transparent background to make it less intrusive
+              border: 'none', // Remove the button border
+            }}
+          />
+        </div>
+      )}
+
       <Content className={styles.layout__content}>{children}</Content>
     </AntLayout>
   )
 }
 
-export default SupportLayout
+export default Layout

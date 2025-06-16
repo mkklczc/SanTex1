@@ -1,14 +1,11 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import { getAllTicketsRoute, getViewTicketRoute, viewTicketRouteParams } from './lib/routes'
 import { TrpcProvider } from './lib/trpc'
 import 'antd/dist/reset.css'
 import './styles/global.less'
 
+import { HelloPage } from './pages/HelloPage/HelloPage'
 import { LoginPage } from './pages/Login/LoginPage'
-import { MainPage } from './pages/Main/MainPage'
-import { TicketPage } from './pages/Ticket/TicketPage'
-import { TicketsPage } from './pages/Tickets/TicketsPage'
-import { PrivateRoute } from './components/PrivateRoute/PrivateRoute'
+// eslint-disable-next-line import/order
 
 export const App = () => {
   return (
@@ -16,30 +13,7 @@ export const App = () => {
       <BrowserRouter>
         <Routes>
           <Route path="/login" element={<LoginPage />} />
-          <Route
-            path={getAllTicketsRoute()}
-            element={
-              <PrivateRoute>
-                <MainPage />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="/my-tickets"
-            element={
-              <PrivateRoute>
-                <TicketsPage />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path={getViewTicketRoute(viewTicketRouteParams)}
-            element={
-              <PrivateRoute>
-                <TicketPage />
-              </PrivateRoute>
-            }
-          />
+          <Route path="/hello" element={<HelloPage />} />
         </Routes>
       </BrowserRouter>
     </TrpcProvider>

@@ -1,6 +1,6 @@
 import { Form, Input, Button, Checkbox } from 'antd'
 import { useNavigate } from 'react-router-dom'
-import GornyEmblem from '../../assets/GornyAuthEmblem.svg?react'
+import Iconka from '../../assets/Iconka.svg?react'
 import { trpc } from '../../lib/trpc'
 import styles from './LoginPage.module.less'
 
@@ -38,8 +38,8 @@ export const LoginPage = () => {
       <div className={styles.rightPane}>
         <div className={styles.loginBox}>
           <div className={styles.logoContainer}>
-            <GornyEmblem />
-            <h3>Техническая поддержка Горного Университета</h3>
+            <Iconka />
+            <h3>Учет ресурсов и управления производственными процессами</h3>
           </div>
 
           <Form
