@@ -15,6 +15,7 @@ export type AllMaterialsRouteParams = typeof allMaterialsRouteParams
 export const getAllMaterialsRoute = ({ sanTex }: AllMaterialsRouteParams) => `/resources/${sanTex}`
 
 export const getNewMaterialsRoute = () => '/resource/materials/newmaterials'
+export const getEditMaterialRoute = ({ materialId }: { materialId: string }) => `/resource/materials/${materialId}/edit`
 export const getNewEquipmentRoute = () => '/resource/equipment/newequipment'
 export const getNewWorkRoute = () => '/works/newwork'
 export const getNewObjectRoute = () => '/objects/newobject'

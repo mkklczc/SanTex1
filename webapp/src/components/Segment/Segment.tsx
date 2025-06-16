@@ -1,5 +1,4 @@
 import css from './Segment.module.less'
-
 export const Segment = ({
   title,
   size = 1,
