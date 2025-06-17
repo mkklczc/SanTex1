@@ -17,6 +17,8 @@ export const getAllMaterialsRoute = ({ sanTex }: AllMaterialsRouteParams) => `/r
 export const getNewMaterialsRoute = () => '/resource/materials/newmaterials'
 export const getEditMaterialRoute = ({ materialId }: { materialId: string }) => `/resource/materials/${materialId}/edit`
 export const getNewEquipmentRoute = () => '/resource/equipment/newequipment'
+export const getEditEquipmentRoute = ({ equipmentId }: { equipmentId: string }) =>
+  `/resource/equipment/${equipmentId}/edit`
 export const getNewWorkRoute = () => '/works/newwork'
 export const getNewObjectRoute = () => '/objects/newobject'
 export const getNewReportRoute = () => '/reports/newreport'

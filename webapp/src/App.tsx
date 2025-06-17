@@ -4,6 +4,9 @@ import 'antd/dist/reset.css'
 import './styles/global.less'
 // eslint-disable-next-line import/order
 import { PrivateRoute } from './components/PrivateRoute/PrivateRoute'
+import EditEquipmentPage from './pages/EquipmentPage/EditEquipmentPage'
+import EquipmentPage from './pages/EquipmentPage/Equipment'
+import NewEquipmentPage from './pages/EquipmentPage/NewEquipmentPage'
 import { HelloPage } from './pages/HelloPage/HelloPage'
 import { LoginPage } from './pages/Login/LoginPage'
 import EditMaterialPage from './pages/MaterialsPage/EditMaterilPage'
@@ -33,6 +36,14 @@ export const App = () => {
             }
           />
           <Route
+            path="/resource/equipment"
+            element={
+              <PrivateRoute>
+                <EquipmentPage />
+              </PrivateRoute>
+            }
+          />
+          <Route
             path="/resource/materials/newmaterials"
             element={
               <PrivateRoute>
@@ -41,10 +52,26 @@ export const App = () => {
             }
           />
           <Route
+            path="/resource/equipment/newequipment"
+            element={
+              <PrivateRoute>
+                <NewEquipmentPage />
+              </PrivateRoute>
+            }
+          />
+          <Route
             path="/resource/materials/:materialId/edit"
             element={
               <PrivateRoute>
                 <EditMaterialPage />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/resource/equipment/:equipmentId/edit"
+            element={
+              <PrivateRoute>
+                <EditEquipmentPage />
               </PrivateRoute>
             }
           />

@@ -2,6 +2,7 @@ import { Button, Form, Input } from 'antd'
 import { useNavigate, useParams } from 'react-router-dom'
 import Layout from '../../components/Layout/Layout'
 import { trpc } from '../../lib/trpc'
+import formStyles from './styles/MaterialForm.module.less'
 
 type Material = {
   name: string
@@ -35,6 +36,7 @@ export const EditMaterialPage = () => {
       <Form
         layout="vertical"
         onFinish={onFinish}
+        className={formStyles.formWrapper}
         initialValues={{
           name: data?.name,
           type: data?.type,
@@ -44,22 +46,31 @@ export const EditMaterialPage = () => {
           tags: data?.tags?.join(', '),
           notes: data?.notes,
         }}
-        style={{ maxWidth: 400 }}
       >
-        <Form.Item label="Название" name="name" rules={[{ required: true }]}>
+        <Form.Item label="Название" name="name" rules={[{ required: true, message: 'Обязательное поле' }]}>
           <Input />
         </Form.Item>
-        <Form.Item label="Тип" name="type" rules={[{ required: true }]}>
+        <Form.Item label="Тип" name="type" rules={[{ required: true, message: 'Обязательное поле' }]}>
           <Input />
         </Form.Item>
-        <Form.Item label="Производитель" name="manufacturer" rules={[{ required: true }]}>
+        <Form.Item label="Производитель" name="manufacturer" rules={[{ required: true, message: 'Обязательное поле' }]}>
           <Input />
         </Form.Item>
-        <Form.Item label="Ед." name="unit" rules={[{ required: true }]}>
+        <Form.Item label="Ед." name="unit" rules={[{ required: true, message: 'Обязательное поле' }]}>
           <Input />
         </Form.Item>
-        <Form.Item label="Цена" name="unitPrice" rules={[{ required: true }]}>
-          <Input type="number" />
+        <Form.Item
+          label="Цена"
+          name="unitPrice"
+          rules={[
+            { required: true, message: 'Обязательное поле' },
+            {
+              validator: (_, value) =>
+                value > 0 ? Promise.resolve() : Promise.reject(new Error('Цена должна быть больше 0')),
+            },
+          ]}
+        >
+          <Input type="number" min={0} />
         </Form.Item>
         <Form.Item label="Тэги (через запятую)" name="tags">
           <Input />

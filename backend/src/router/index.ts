@@ -1,6 +1,7 @@
 import { trpc } from '../lib/trpc'
 // @index('./**/index.ts', f => `import { ${f.path.split('/').slice(0, -1).pop()}TrpcRoute } from '${f.path.split('/').slice(0, -1).join('/')}'`)
 import { authTrpcRoute } from './auth'
+import { equipmentTrpcRoute } from './equipment'
 import { helloTrpcRoute } from './hello'
 import { materialsTrpcRoute } from './materials'
 // @endindex
@@ -10,6 +11,7 @@ export const trpcRouter = trpc.router({
   auth: authTrpcRoute,
   hello: helloTrpcRoute,
   materials: materialsTrpcRoute,
+  equipment: equipmentTrpcRoute,
   // @endindex
 })
 
