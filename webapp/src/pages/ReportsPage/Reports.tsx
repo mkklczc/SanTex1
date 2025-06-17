@@ -4,6 +4,7 @@ import { useState } from 'react'
 import Layout from '../../components/Layout/Layout'
 import layoutStyles from '../../components/Layout/Layout.module.less'
 import styles from './styles/Reports.module.less'
+
 type Report = {
   object: string
   actNumber: string
@@ -18,6 +19,26 @@ export const ReportsPage = () => {
   const onAdd = (values: Report) => {
     setReports([...reports, values])
     form.resetFields()
+  }
+
+  const formatCurrency = (value: number) =>
+    value.toLocaleString('ru-RU', {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    })
+
+  const generateActHtml = (r: Report) => {
+    return `
+      <div style="page-break-after: always; font-family: Arial, sans-serif; font-size: 14px;">
+        <h2 style="text-align: center;">Акт № ${r.actNumber}</h2>
+        <p style="text-align: center;">сдачи-приемки выполненных работ</p>
+        <p style="text-align: center;">по договору №17/02/24 от "17" февраля 2024 г.</p>
+        <p style="text-align: right;">г. Санкт-Петербург « 31 » май 2025 г.</p>
+        <p>ООО «X», именуемое в дальнейшем «Заказчик», и ИП X, именуемое в дальнейшем «Подрядчик», составили настоящий акт о том, что Исполнитель выполнил, а Заказчик принял следующие работы:</p>
+        <p>Монтаж систем разделов ОВ и ВК, на объекте: ${r.object}</p>
+        <p>Всего выполнено работ на сумму: ${formatCurrency(r.totalCost)} руб.</p>
+      </div>
+    `
   }
 
   const exportToExcel = () => {
@@ -35,12 +56,12 @@ export const ReportsPage = () => {
   }
 
   const exportToPdf = () => {
-    const printWindow = window.open('', '', 'height=600,width=800')
+    const printWindow = window.open('', '', 'height=842,width=595')
     if (!printWindow) {
       return
     }
-    const tableHtml = document.getElementById('reports-table')?.outerHTML || ''
-    printWindow.document.write(`<html><head><title>Reports</title></head><body>${tableHtml}</body></html>`)
+    const html = reports.map((r) => generateActHtml(r)).join('')
+    printWindow.document.write(`<html><head><title>Reports</title></head><body>${html}</body></html>`)
     printWindow.document.close()
     printWindow.print()
   }
