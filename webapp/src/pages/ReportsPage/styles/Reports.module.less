@@ -1,0 +1,30 @@
+@import '../../../styles/variables.less';
+
+.container {
+  padding: @spacing-md;
+  background: @defaultBackgroundColor;
+}
+
+.header {
+  display: flex;
+  margin-bottom: @spacing-md;
+
+  .form {
+    display: flex;
+    gap: @spacing-sm;
+    flex-wrap: wrap;
+  }
+
+  .actions {
+    margin-left: auto;
+    display: flex;
+    gap: @spacing-sm;
+  }
+}
+
+.table {
+  background: @white;
+  padding: @spacing-sm;
+  border-radius: @border-radius-base;
+  box-shadow: @shadow-sm;
+}

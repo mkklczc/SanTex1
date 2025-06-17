@@ -15,6 +15,7 @@ import NewMaterialPage from './pages/MaterialsPage/NewMaterilPage'
 import EditObjectPage from './pages/ObjectPage/EditObjectPage'
 import NewObjectPage from './pages/ObjectPage/NewObjectPage'
 import ObjectsPage from './pages/ObjectPage/Objects'
+import ReportsPage from './pages/ReportsPage/Reports'
 import NewWorkPage from './pages/WorkPage/NewWorkPage'
 import WorksPage from './pages/WorkPage/Works'
 
@@ -53,6 +54,14 @@ export const App = () => {
             element={
               <PrivateRoute>
                 <WorksPage />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/reports"
+            element={
+              <PrivateRoute>
+                <ReportsPage />
               </PrivateRoute>
             }
           />
