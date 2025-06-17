@@ -1,7 +1,9 @@
 import { Button, Form, Input } from 'antd'
 import { useNavigate, useParams } from 'react-router-dom'
 import Layout from '../../components/Layout/Layout'
+import layoutStyles from '../../components/Layout/Layout.module.less'
 import { trpc } from '../../lib/trpc'
+import formStyles from './styles/EquipmentForm.module.less'
 
 type Equipment = {
   name: string
@@ -36,6 +38,7 @@ export const EditEquipmentPage = () => {
 
   return (
     <Layout>
+      <h1 className={layoutStyles.titletwo}>Редактировать оборудование</h1>
       <Form
         layout="vertical"
         onFinish={onFinish}
@@ -49,7 +52,7 @@ export const EditEquipmentPage = () => {
           status: data?.status,
           tags: data?.tags?.join(', '),
         }}
-        style={{ maxWidth: 400 }}
+        className={formStyles.formWrapper}
       >
         <Form.Item label="Название" name="name" rules={[{ required: true }]}>
           <Input />

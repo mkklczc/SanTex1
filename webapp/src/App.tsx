@@ -12,6 +12,8 @@ import { LoginPage } from './pages/Login/LoginPage'
 import EditMaterialPage from './pages/MaterialsPage/EditMaterilPage'
 import MaterialsPage from './pages/MaterialsPage/Materials'
 import NewMaterialPage from './pages/MaterialsPage/NewMaterilPage'
+import NewWorkPage from './pages/WorkPage/NewWorkPage'
+import WorksPage from './pages/WorkPage/Works'
 
 export const App = () => {
   return (
@@ -44,6 +46,14 @@ export const App = () => {
             }
           />
           <Route
+            path="/works"
+            element={
+              <PrivateRoute>
+                <WorksPage />
+              </PrivateRoute>
+            }
+          />
+          <Route
             path="/resource/materials/newmaterials"
             element={
               <PrivateRoute>
@@ -56,6 +66,14 @@ export const App = () => {
             element={
               <PrivateRoute>
                 <NewEquipmentPage />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/works/newwork"
+            element={
+              <PrivateRoute>
+                <NewWorkPage />
               </PrivateRoute>
             }
           />

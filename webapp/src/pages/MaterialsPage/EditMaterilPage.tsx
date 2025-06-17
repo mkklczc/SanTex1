@@ -1,6 +1,7 @@
 import { Button, Form, Input } from 'antd'
 import { useNavigate, useParams } from 'react-router-dom'
 import Layout from '../../components/Layout/Layout'
+import layoutStyles from '../../components/Layout/Layout.module.less'
 import { trpc } from '../../lib/trpc'
 import formStyles from './styles/MaterialForm.module.less'
 
@@ -33,6 +34,7 @@ export const EditMaterialPage = () => {
 
   return (
     <Layout>
+      <h1 className={layoutStyles.titletwo}>Редактировать материал</h1>
       <Form
         layout="vertical"
         onFinish={onFinish}

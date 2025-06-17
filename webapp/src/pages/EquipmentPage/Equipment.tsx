@@ -3,8 +3,10 @@ import type { ColumnsType } from 'antd/es/table'
 import { useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 import Layout from '../../components/Layout/Layout'
+import layoutStyles from '../../components/Layout/Layout.module.less'
 import { getEditEquipmentRoute, getNewEquipmentRoute } from '../../lib/routes'
 import { trpc } from '../../lib/trpc'
+import styles from './styles/Equipment.module.less'
 
 export const AllEquipmentPage = () => {
   const { data: equipment, refetch } = trpc.equipment.list.useQuery()
@@ -56,13 +58,24 @@ export const AllEquipmentPage = () => {
 
   return (
     <Layout>
-      <Space style={{ marginBottom: 16 }}>
-        <Input.Search placeholder="Поиск" allowClear onSearch={setSearch} onChange={(e) => setSearch(e.target.value)} />
-        <Link to={getNewEquipmentRoute()}>
-          <Button type="primary">Добавить оборудование</Button>
-        </Link>
-      </Space>
-      <Table rowKey="id" columns={columns} dataSource={filtered} />
+      <h1 className={layoutStyles.titletwo}>Оборудование</h1>
+      <div className={styles.container}>
+        <div className={styles.header}>
+          <Input.Search
+            className={styles.search}
+            placeholder="Поиск"
+            allowClear
+            onSearch={setSearch}
+            onChange={(e) => setSearch(e.target.value)}
+          />
+          <Link to={getNewEquipmentRoute()}>
+            <Button type="primary">Добавить оборудование</Button>
+          </Link>
+        </div>
+        <div className={styles.table}>
+          <Table rowKey="id" columns={columns} dataSource={filtered} />
+        </div>
+      </div>
     </Layout>
   )
 }

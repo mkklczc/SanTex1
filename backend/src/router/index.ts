@@ -4,6 +4,8 @@ import { authTrpcRoute } from './auth'
 import { equipmentTrpcRoute } from './equipment'
 import { helloTrpcRoute } from './hello'
 import { materialsTrpcRoute } from './materials'
+import { objectsTrpcRoute } from './objects'
+import { worksTrpcRoute } from './works'
 // @endindex
 
 export const trpcRouter = trpc.router({
@@ -12,6 +14,8 @@ export const trpcRouter = trpc.router({
   hello: helloTrpcRoute,
   materials: materialsTrpcRoute,
   equipment: equipmentTrpcRoute,
+  works: worksTrpcRoute,
+  objects: objectsTrpcRoute,
   // @endindex
 })
 

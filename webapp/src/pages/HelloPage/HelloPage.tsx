@@ -1,4 +1,5 @@
 import SupportLayout from '../../components/Layout/Layout'
+import layoutStyles from '../../components/Layout/Layout.module.less'
 import { trpc } from '../../lib/trpc'
 
 export const HelloPage = () => {
@@ -22,6 +23,7 @@ export const HelloPage = () => {
 
   return (
     <SupportLayout>
+      <h1 className={layoutStyles.titletwo}>Учет ресурсов и управления производственными процессами компании</h1>
       <h1>{data?.message}</h1>
     </SupportLayout>
   )
