@@ -1,0 +1,38 @@
+@import '../../styles/variables.less';
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: @spacing-md;
+
+  .logo {
+    display: flex;
+    align-items: center;
+
+    svg {
+      height: 40px;
+    }
+  }
+
+  .date {
+    font-size: @font-size-lg;
+    color: @text-light;
+  }
+}
+
+.dashboard {
+  display: flex;
+  gap: @spacing-md;
+  margin-bottom: @spacing-lg;
+
+  .card {
+    flex: 1;
+  }
+}
+
+.notifications {
+  h2 {
+    margin-bottom: @spacing-sm;
+  }
+}
