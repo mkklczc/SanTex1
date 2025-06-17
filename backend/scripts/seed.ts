@@ -1,87 +1,36 @@
 import { PrismaClient } from '@prisma/client'
-import crypto from 'crypto'
+import bcrypt from 'bcrypt'
 
 const prisma = new PrismaClient()
 
-async function seed() {
-  const usersToCreate = [
-    {
-      full_name: 'Иван Иванов',
-      login: 'ivanov',
-      email: 'ivanov@spmi.ru',
-      password: 'ivn',
-    },
-    {
-      full_name: 'Пётр Петров',
-      login: 'petrov',
-      email: 'petrov@spmi.ru',
-      password: 'ptr',
-    },
-    {
-      full_name: 'Анна Оператор',
-      login: 'anna.operator',
-      email: 'anna@spmi.ru',
-      password: 'opr',
-      role: 'operator',
-    },
-    {
-      full_name: 'Елена Главная',
-      login: 'elena.chief',
-      email: 'elena@spmi.ru',
-      password: 'adm',
-      role: 'chief',
-    },
-  ]
+async function main() {
+  const password_hash = await bcrypt.hash('123', 10)
 
-  const roles = await Promise.all([
-    prisma.operatorRole.upsert({
-      where: { name: 'operator' },
-      update: {},
-      create: {
-        name: 'operator',
-        description: 'Оператор поддержки',
-      },
-    }),
-    prisma.operatorRole.upsert({
-      where: { name: 'chief' },
-      update: {},
-      create: {
-        name: 'chief',
-        description: 'Главный оператор',
-      },
-    }),
-  ])
+  // Получаем роль, которую нужно присвоить пользователю, например, роль 'user'
+  const role = await prisma.role.findFirst({
+    where: { name: 'user' }, // Можно изменить на нужную роль
+  })
 
-  for (const user of usersToCreate) {
-    const password_hash = crypto.createHash('sha256').update(user.password).digest('hex')
-
-    const createdUser = await prisma.user.create({
-      data: {
-        full_name: user.full_name,
-        login: user.login,
-        password_hash,
-        email: user.email,
-      },
-    })
-
-    if (user.role) {
-      const role = roles.find((r) => r.name === user.role)
-      if (role) {
-        await prisma.operator.create({
-          data: {
-            user_id: createdUser.id,
-            role_id: role.id,
-          },
-        })
-      }
-    }
-
-    console.log(`${user.login} создан. Пароль: ${user.password}`)
+  if (!role) {
+    console.info('Роль не найдена')
+    return
   }
 
-  console.log('✅ Все пользователи созданы.')
+  await prisma.user.create({
+    data: {
+      full_name: 'Антон Малышев',
+      login: 'malyshev',
+      email: 'malyshev@example.com',
+      password_hash,
+      roleId: role.id, // Присваиваем roleId пользователю
+    },
+  })
 }
 
-seed()
-  .catch(console.error)
-  .finally(() => prisma.$disconnect())
+main()
+  .then(() => prisma.$disconnect())
+  .catch(async (e) => {
+    console.error(e)
+    await prisma.$disconnect()
+    process.exit(1)
+  })

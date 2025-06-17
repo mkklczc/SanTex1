@@ -21,6 +21,7 @@ export const getEditEquipmentRoute = ({ equipmentId }: { equipmentId: string }) 
   `/resource/equipment/${equipmentId}/edit`
 export const getNewWorkRoute = () => '/works/newwork'
 export const getNewObjectRoute = () => '/objects/newobject'
+export const getEditObjectRoute = ({ objectId }: { objectId: string }) => `/objects/${objectId}/edit`
 export const getNewReportRoute = () => '/reports/newreport'
 
 export const getEquipmentRoute = () => '/resource/equipment'

@@ -12,7 +12,8 @@
     "types": "tsc --noEmit --project ./tsconfig.json",
     "lint": "eslint --cache --cache-location ./node_modules/.cache/.eslintcache --ext .ts .",
     "prettify": "prettier --log-level warn --cache --write \"src/**/*.{ts,tsx,js,json,yml,scss}\" \"*.{ts,tsx,js,json,yml,scss}\" --ignore-path .prettierignore",
-    "prepare": "pnpm pgc"
+    "prepare": "pnpm pgc",
+    "prisma": "prisma"
   },
   "prisma": {
     "schema": "./src/prisma/schema.prisma"

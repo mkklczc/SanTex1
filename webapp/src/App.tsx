@@ -12,6 +12,9 @@ import { LoginPage } from './pages/Login/LoginPage'
 import EditMaterialPage from './pages/MaterialsPage/EditMaterilPage'
 import MaterialsPage from './pages/MaterialsPage/Materials'
 import NewMaterialPage from './pages/MaterialsPage/NewMaterilPage'
+import EditObjectPage from './pages/ObjectPage/EditObjectPage'
+import NewObjectPage from './pages/ObjectPage/NewObjectPage'
+import ObjectsPage from './pages/ObjectPage/Objects'
 import NewWorkPage from './pages/WorkPage/NewWorkPage'
 import WorksPage from './pages/WorkPage/Works'
 
@@ -54,6 +57,14 @@ export const App = () => {
             }
           />
           <Route
+            path="/objects"
+            element={
+              <PrivateRoute>
+                <ObjectsPage />
+              </PrivateRoute>
+            }
+          />
+          <Route
             path="/resource/materials/newmaterials"
             element={
               <PrivateRoute>
@@ -78,6 +89,14 @@ export const App = () => {
             }
           />
           <Route
+            path="/objects/newobject"
+            element={
+              <PrivateRoute>
+                <NewObjectPage />
+              </PrivateRoute>
+            }
+          />
+          <Route
             path="/resource/materials/:materialId/edit"
             element={
               <PrivateRoute>
@@ -90,6 +109,14 @@ export const App = () => {
             element={
               <PrivateRoute>
                 <EditEquipmentPage />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/objects/:objectId/edit"
+            element={
+              <PrivateRoute>
+                <EditObjectPage />
               </PrivateRoute>
             }
           />

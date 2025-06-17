@@ -1,0 +1,24 @@
+@import '../../../styles/variables.less';
+
+.container {
+  padding: @spacing-md;
+  background: @defaultBackgroundColor;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: @spacing-md;
+
+  .search {
+    flex: 1;
+    margin-right: @spacing-sm;
+  }
+}
+
+.table {
+  background: @white;
+  padding: @spacing-sm;
+  border-radius: @border-radius-base;
+  box-shadow: @shadow-sm;
+}

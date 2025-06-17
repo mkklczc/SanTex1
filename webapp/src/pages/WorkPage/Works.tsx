@@ -3,6 +3,7 @@ import type { ColumnsType } from 'antd/es/table'
 import { useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 import Layout from '../../components/Layout/Layout'
+import layoutStyles from '../../components/Layout/Layout.module.less'
 import { getNewWorkRoute } from '../../lib/routes'
 import { trpc } from '../../lib/trpc'
 import styles from './styles/Works.module.less'
@@ -76,6 +77,7 @@ export const WorksPage = () => {
 
   return (
     <Layout>
+      <h1 className={layoutStyles.titletwo}>Работы</h1>
       <div className={styles.container}>
         <div className={styles.header}>
           <Input.Search

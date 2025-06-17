@@ -4,10 +4,10 @@ import { z } from 'zod'
 import { publicProcedure, router } from '../../lib/trpc'
 import { UserRole } from '../../types/roles'
 
-const ADMIN_ROLE_ID = 'fcc58743-40fa-471a-8fce-8e684b76ab7f'
-const PROJECT_MANAGER_ROLE_ID = '5cea8cbf-eb80-4caa-988c-a73642ca24e2'
-const WAREHOUSE_MANAGER_ROLE_ID = '823c92fc-f9d5-4424-bd92-f50096af541d'
-const TECHNICIAN_ROLE_ID = 'bfbda67d-490a-4f08-b9e4-a762fc95c353'
+const ADMIN_ROLE_ID = '30bf7ea6-9efd-4ac1-8996-d3a153a91551'
+const PROJECT_MANAGER_ROLE_ID = '880dc2af-1865-499d-9b78-9431ba7370b2'
+const WAREHOUSE_MANAGER_ROLE_ID = '5fc44f44-e58c-4ebc-ab79-7383f2ffdf18'
+const TECHNICIAN_ROLE_ID = '69cccdb8-3c7c-426e-8953-713194d16b3b'
 
 export const authTrpcRoute = router({
   login: publicProcedure
