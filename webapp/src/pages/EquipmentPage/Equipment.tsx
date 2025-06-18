@@ -1,4 +1,4 @@
-import { Button, Input, Space, Table, Tag } from 'antd'
+import { Button, Input, Space, Table, Tag, Select, Modal } from 'antd'
 import type { ColumnsType } from 'antd/es/table'
 import { useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
@@ -14,13 +14,36 @@ export const AllEquipmentPage = () => {
     onSuccess: () => refetch(),
   })
   const [search, setSearch] = useState('')
+  const [statusFilter, setStatusFilter] = useState<string | null>(null)
+  const [tagFilter, setTagFilter] = useState<string | null>(null)
+
+  const statusOptions = useMemo(() => {
+    if (!equipment) {
+      return []
+    }
+    const unique = Array.from(new Set(equipment.map((e) => e.status)))
+    return unique.map((s) => ({ label: s, value: s }))
+  }, [equipment])
+
+  const tagOptions = useMemo(() => {
+    if (!equipment) {
+      return []
+    }
+    const unique = Array.from(new Set(equipment.flatMap((e) => e.tags ?? [])))
+    return unique.map((t) => ({ label: t, value: t }))
+  }, [equipment])
 
   const filtered = useMemo(() => {
     if (!equipment) {
       return []
     }
-    return equipment.filter((e: { name: string }) => e.name.toLowerCase().includes(search.toLowerCase()))
-  }, [equipment, search])
+    return equipment.filter((e: { name: string; status: string; tags?: string[] }) => {
+      const matchName = e.name.toLowerCase().includes(search.toLowerCase())
+      const matchStatus = statusFilter ? e.status === statusFilter : true
+      const matchTag = tagFilter ? e.tags?.includes(tagFilter) : true
+      return matchName && matchStatus && matchTag
+    })
+  }, [equipment, search, statusFilter, tagFilter])
 
   const columns: ColumnsType<(typeof filtered)[number]> = [
     { title: 'Название', dataIndex: 'name', key: 'name' },
@@ -48,7 +71,18 @@ export const AllEquipmentPage = () => {
       render: (_, record) => (
         <Space>
           <Link to={getEditEquipmentRoute({ equipmentId: record.id })}>Редактировать</Link>
-          <Button danger size="small" onClick={() => deleteMutation.mutate({ id: record.id })}>
+          <Button
+            danger
+            size="small"
+            onClick={() =>
+              Modal.confirm({
+                title: `Удалить оборудование ${record.name}?`,
+                okText: 'Да',
+                cancelText: 'Нет',
+                onOk: () => deleteMutation.mutate({ id: record.id }),
+              })
+            }
+          >
             Удалить
           </Button>
         </Space>
@@ -67,6 +101,20 @@ export const AllEquipmentPage = () => {
             allowClear
             onSearch={setSearch}
             onChange={(e) => setSearch(e.target.value)}
+          />
+          <Select
+            allowClear
+            placeholder="Статус"
+            options={statusOptions}
+            style={{ width: 150, marginRight: 8 }}
+            onChange={(v) => setStatusFilter(v || null)}
+          />
+          <Select
+            allowClear
+            placeholder="Тег"
+            options={tagOptions}
+            style={{ width: 150, marginRight: 8 }}
+            onChange={(v) => setTagFilter(v || null)}
           />
           <Link to={getNewEquipmentRoute()}>
             <Button type="primary">Добавить оборудование</Button>

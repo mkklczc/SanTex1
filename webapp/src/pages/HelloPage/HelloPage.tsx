@@ -1,3 +1,4 @@
+import { HomeOutlined, AppstoreOutlined, ToolOutlined } from '@ant-design/icons'
 import { Card, List, Statistic } from 'antd'
 import dayjs from 'dayjs'
 import Iconka from '../../assets/Iconka.svg?react'
@@ -29,23 +30,52 @@ export const HelloPage = () => {
 
   return (
     <Layout>
-      <h1 className={layoutStyles.titletwo}>Учет ресурсов и управления производственными процессами компании</h1>
-      <div className={styles.header}>
-        <div className={styles.logo}>
+      <div className={styles.titleWrapper}>
+        <div className={styles.bigLogo}>
           <Iconka />
         </div>
+        <h1 className={layoutStyles.titletwo}>Учет ресурсов и управления производственными процессами компании</h1>
+      </div>
+      <div className={styles.header}>
+        {/* <div className={styles.logo}>
+          <Iconka />
+        </div> */}
         <div className={styles.date}>{currentDate}</div>
       </div>
 
       <div className={styles.dashboard}>
         <Card className={styles.card}>
-          <Statistic title="Всего объектов" value={data.objectsCount} />
+          <Statistic
+            title={
+              <span>
+                <HomeOutlined /> Всего объектов
+              </span>
+            }
+            value={data.objectsCount}
+            valueStyle={{ color: '#fc8231' }}
+          />
         </Card>
         <Card className={styles.card}>
-          <Statistic title="Всего материалов" value={data.materialsCount} />
+          <Statistic
+            title={
+              <span>
+                <AppstoreOutlined /> Всего материалов
+              </span>
+            }
+            value={data.materialsCount}
+            valueStyle={{ color: '#fc8231' }}
+          />
         </Card>
         <Card className={styles.card}>
-          <Statistic title="Работы сегодня" value={data.worksTodayCount} />
+          <Statistic
+            title={
+              <span>
+                <ToolOutlined /> Работы сегодня
+              </span>
+            }
+            value={data.worksTodayCount}
+            valueStyle={{ color: '#fc8231' }}
+          />
         </Card>
       </div>
 

@@ -1,4 +1,4 @@
-import { Button, Input, Table, Select } from 'antd'
+import { Button, Input, Table, Select, Modal } from 'antd'
 import type { ColumnsType } from 'antd/es/table'
 import { useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
@@ -68,7 +68,18 @@ export const WorksPage = () => {
       title: 'Действия',
       key: 'actions',
       render: (_, record) => (
-        <Button danger size="small" onClick={() => deleteMutation.mutate({ id: record.id })}>
+        <Button
+          danger
+          size="small"
+          onClick={() =>
+            Modal.confirm({
+              title: `Удалить работу ${record.description}?`,
+              okText: 'Да',
+              cancelText: 'Нет',
+              onOk: () => deleteMutation.mutate({ id: record.id }),
+            })
+          }
+        >
           Удалить
         </Button>
       ),

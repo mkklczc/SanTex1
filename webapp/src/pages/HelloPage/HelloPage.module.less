@@ -21,10 +21,29 @@
   }
 }
 
+.titleWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: @spacing-md;
+  margin-bottom: @spacing-md;
+
+  .bigLogo {
+    svg {
+      height: 80px;
+    }
+  }
+}
+
 .dashboard {
   display: flex;
   gap: @spacing-md;
   margin-bottom: @spacing-lg;
+
+.ant-statistic-title,
+  .ant-statistic-content-value {
+    color: @titleColor;
+  }
 
   .card {
     flex: 1;

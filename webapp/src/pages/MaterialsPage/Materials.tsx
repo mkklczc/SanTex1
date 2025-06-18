@@ -1,4 +1,4 @@
-import { Button, Input, Space, Table, Tag } from 'antd'
+import { Button, Input, Space, Table, Tag, Select, Modal } from 'antd'
 import type { ColumnsType } from 'antd/es/table'
 import { useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
@@ -14,13 +14,26 @@ export const AllMaterialsPage = () => {
     onSuccess: () => refetch(),
   })
   const [search, setSearch] = useState('')
+  const [tagFilter, setTagFilter] = useState<string | null>(null)
+
+  const tagOptions = useMemo(() => {
+    if (!materials) {
+      return []
+    }
+    const unique = Array.from(new Set(materials.flatMap((m) => m.tags ?? [])))
+    return unique.map((t) => ({ label: t, value: t }))
+  }, [materials])
 
   const filtered = useMemo(() => {
     if (!materials) {
       return []
     }
-    return materials.filter((m: { name: string }) => m.name.toLowerCase().includes(search.toLowerCase()))
-  }, [materials, search])
+    return materials.filter((m: { name: string; tags?: string[] }) => {
+      const matchName = m.name.toLowerCase().includes(search.toLowerCase())
+      const matchTag = tagFilter ? m.tags?.includes(tagFilter) : true
+      return matchName && matchTag
+    })
+  }, [materials, search, tagFilter])
 
   const columns: ColumnsType<(typeof filtered)[number]> = [
     { title: 'Название', dataIndex: 'name', key: 'name' },
@@ -46,7 +59,18 @@ export const AllMaterialsPage = () => {
       render: (_, record) => (
         <Space>
           <Link to={getEditMaterialRoute({ materialId: record.id })}>Редактировать</Link>
-          <Button danger size="small" onClick={() => deleteMutation.mutate({ id: record.id })}>
+          <Button
+            danger
+            size="small"
+            onClick={() =>
+              Modal.confirm({
+                title: `Удалить материал ${record.name}?`,
+                okText: 'Да',
+                cancelText: 'Нет',
+                onOk: () => deleteMutation.mutate({ id: record.id }),
+              })
+            }
+          >
             Удалить
           </Button>
         </Space>
@@ -65,6 +89,13 @@ export const AllMaterialsPage = () => {
             allowClear
             onSearch={setSearch}
             onChange={(e) => setSearch(e.target.value)}
+          />
+          <Select
+            allowClear
+            placeholder="Тег"
+            options={tagOptions}
+            style={{ width: 150, marginRight: 8 }}
+            onChange={(v) => setTagFilter(v || null)}
           />
           <Link to={getNewMaterialsRoute()}>
             <Button type="primary">Добавить материал</Button>

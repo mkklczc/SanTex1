@@ -66,11 +66,31 @@ export const EditEquipmentPage = () => {
         <Form.Item label="Ед." name="unit" rules={[{ required: true }]}>
           <Input />
         </Form.Item>
-        <Form.Item label="Цена" name="unitPrice" rules={[{ required: true }]}>
-          <Input type="number" />
+        <Form.Item
+          label="Цена"
+          name="unitPrice"
+          rules={[
+            { required: true, message: 'Обязательное поле' },
+            {
+              validator: (_, value) =>
+                value > 0 ? Promise.resolve() : Promise.reject(new Error('Цена должна быть больше 0')),
+            },
+          ]}
+        >
+          <Input type="number" min={0} />
         </Form.Item>
-        <Form.Item label="Количество" name="quantity" rules={[{ required: true }]}>
-          <Input type="number" />
+        <Form.Item
+          label="Количество"
+          name="quantity"
+          rules={[
+            { required: true, message: 'Обязательное поле' },
+            {
+              validator: (_, value) =>
+                value > 0 ? Promise.resolve() : Promise.reject(new Error('Количество должно быть больше 0')),
+            },
+          ]}
+        >
+          <Input type="number" min={0} />
         </Form.Item>
         <Form.Item label="Статус" name="status" rules={[{ required: true }]}>
           <Input />
