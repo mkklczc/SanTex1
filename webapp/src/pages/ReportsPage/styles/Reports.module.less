@@ -28,6 +28,23 @@
   border-radius: @border-radius-base;
   box-shadow: @shadow-sm;
 
+  .verticalTable {
+    width: 100%;
+    border-collapse: collapse;
+
+    th,
+    td {
+      border: 1px solid @border-color-base;
+      padding: 4px;
+      text-align: right;
+    }
+
+    th:first-child,
+    td:first-child {
+      text-align: left;
+    }
+  }
+
   }
 
 .section {

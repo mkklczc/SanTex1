@@ -26,6 +26,7 @@
     "react-dom": "^19.1.0",
     "react-router-dom": "^7.5.3",
     "superjson": "^2.2.2",
+    "xlsx": "^0.18.5",
     "zod": "^3.24.3"
   },
   "devDependencies": {
