@@ -87,7 +87,7 @@ export const WorksPage = () => {
   ]
 
   return (
-    <Layout>
+    <Layout withBackground>
       <h1 className={layoutStyles.titletwo}>Работы</h1>
       <div className={styles.container}>
         <div className={styles.header}>

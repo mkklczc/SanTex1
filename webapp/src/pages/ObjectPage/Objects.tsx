@@ -20,7 +20,7 @@ export const ObjectsPage = () => {
   }, [objects, search])
 
   return (
-    <Layout>
+    <Layout withBackground>
       <h1 className={layoutStyles.titletwo}>Объекты</h1>
       <div className={styles.container}>
         <div className={styles.header}>

@@ -1,4 +1,4 @@
-import { Button, Input, Space, Table, Tag, Select, Modal } from 'antd'
+import { Button, Input, Space, Table, Tag, Select, Modal, notification } from 'antd'
 import type { ColumnsType } from 'antd/es/table'
 import { useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
@@ -64,10 +64,17 @@ export const AllMaterialsPage = () => {
             size="small"
             onClick={() =>
               Modal.confirm({
-                title: `Удалить материал ${record.name}?`,
+                title: `Удалить материал "${record.name}"?`,
+                content: `Вы уверены, что хотите удалить материал "${record.name}"? Это действие нельзя будет отменить.`,
                 okText: 'Да',
                 cancelText: 'Нет',
-                onOk: () => deleteMutation.mutate({ id: record.id }),
+                onOk: () => {
+                  deleteMutation.mutate({ id: record.id })
+                  notification.success({
+                    message: `Материал "${record.name}" удалён.`,
+                    description: 'Материал успешно удалён из списка.',
+                  })
+                },
               })
             }
           >
@@ -79,14 +86,15 @@ export const AllMaterialsPage = () => {
   ]
 
   return (
-    <Layout>
-      <h1 className={layoutStyles.titletwo}>Материалы</h1>
+    <Layout withBackground>
+      <h1 className={`${layoutStyles.titletwo} ${layoutStyles.overlayTitle}`.trim()}>Материалы</h1>
       <div className={styles.container}>
         <div className={styles.header}>
           <Input.Search
             className={styles.search}
             placeholder="Поиск"
             allowClear
+            enterButton
             onSearch={setSearch}
             onChange={(e) => setSearch(e.target.value)}
           />

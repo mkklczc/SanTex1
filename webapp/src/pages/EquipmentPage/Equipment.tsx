@@ -91,7 +91,7 @@ export const AllEquipmentPage = () => {
   ]
 
   return (
-    <Layout>
+    <Layout withBackground>
       <h1 className={layoutStyles.titletwo}>Оборудование</h1>
       <div className={styles.container}>
         <div className={styles.header}>

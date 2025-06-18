@@ -29,7 +29,7 @@ export const HelloPage = () => {
   }
 
   return (
-    <Layout>
+    <Layout withBackground>
       <div className={styles.titleWrapper}>
         <div className={styles.bigLogo}>
           <Iconka />

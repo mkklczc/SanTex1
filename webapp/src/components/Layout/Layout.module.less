@@ -116,7 +116,7 @@ a {
 
 .title {
     font-size: 24px;
-    font-weight: 600;
+    font-weight: 700;
     margin-bottom: 20px;
     color: @secondaryColor;
     text-align: center;
@@ -126,8 +126,25 @@ a {
     font-size: 30px;
     font-weight: 600;
     margin-bottom: 20px;
-    color: @titleColor;
+    color: #050c12;
     text-align: center;
+}
+
+.background {
+    position: relative;
+
+    &::before {
+        content: '';
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: url('../../assets/Fon.jpg') no-repeat center/cover;
+        opacity: 0.9;
+        z-index: -0.9;
+        
+    }
 }
 
 @media (max-width: @breakpoint) {
