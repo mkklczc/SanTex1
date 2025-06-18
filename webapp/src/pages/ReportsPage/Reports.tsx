@@ -1,5 +1,6 @@
 import { Button, Form, Input, InputNumber, Select, Space, Table } from 'antd'
 import { useState } from 'react'
+import * as XLSX from 'xlsx'
 import Layout from '../../components/Layout/Layout'
 import { trpc } from '../../lib/trpc'
 import styles from './styles/Reports.module.less'
@@ -253,54 +254,63 @@ export const ReportsPage = () => {
   }
 
   const exportToExcel = () => {
-    const header = [
-      'Объект',
-      'Номер акта',
-      'Базовая стоимость',
-      'Накладные расходы',
-      'Всего',
-      'Всего с удержанием',
-      'Гарантийное удержание',
-      'Зачет аванса',
-      'Возврат гарантийного удержания',
-      'Итого без НДС',
-      'К выплате',
-      'К выплате наличными',
-    ]
+    const workbook = XLSX.utils.book_new()
 
-    const rows = reports.map((r) => [
-      r.object,
-      r.actNumber,
-      r.baseCost,
-      r.overhead,
-      r.total,
-      r.totalWithHoldback,
-      r.guaranteeHoldback,
-      r.advanceOffset,
-      r.guaranteeReturn,
-      r.totalWithoutVat,
-      r.payable,
-      r.payableCash,
-    ])
+    reports.forEach((r, idx) => {
+      const tableHeader = ['№ п/п', 'Наименование', 'Тип', 'Ед. изм.', 'Кол-во', 'Цена', 'Сумма']
 
-    const xmlRows = rows
-      .map((row) => `<Row>${row.map((cell) => `<Cell><Data ss:Type="Number">${cell}</Data></Cell>`).join('')}</Row>`)
-      .join('')
+      const materialRows = r.materials.map((m, i) => [
+        i + 1,
+        m.name,
+        '',
+        'шт.',
+        m.quantity,
+        formatCurrency(m.price),
+        formatCurrency(m.cost),
+      ])
 
-    const xmlHeader = header.map((h) => `<Cell><Data ss:Type="String">${h}</Data></Cell>`).join('')
+      const workRows = r.works.map((w, i) => [
+        r.materials.length + i + 1,
+        w.name,
+        '',
+        '',
+        '',
+        '',
+        formatCurrency(w.cost),
+      ])
 
-    const xml =
-      `<?xml version="1.0" encoding="UTF-8"?>` +
-      '<?mso-application progid="Excel.Sheet"?>' +
-      '<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet" ' +
-      'xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet">' +
-      '<Worksheet ss:Name="Reports"><Table>' +
-      `<Row>${xmlHeader}</Row>` +
-      xmlRows +
-      '</Table></Worksheet></Workbook>'
+      const totals = [
+        ['Итого:', '', '', '', '', '', formatCurrency(r.baseCost)],
+        ['Накладные расходы:', '', '', '', '', '', formatCurrency(r.overhead)],
+        ['ВСЕГО:', '', '', '', '', '', formatCurrency(r.total)],
+        ['Всего (с 10% удержаний):', '', '', '', '', '', formatCurrency(r.totalWithHoldback)],
+        ['Гарантийное удержание:', '', '', '', '', '', formatCurrency(r.guaranteeHoldback)],
+        ['Зачет аванса:', '', '', '', '', '', formatCurrency(r.advanceOffset)],
+        ['Возврат гарантийного удержания:', '', '', '', '', '', formatCurrency(r.guaranteeReturn)],
+        ['Итого (без НДС):', '', '', '', '', '', formatCurrency(r.totalWithoutVat)],
+        ['ВСЕГО к выплате:', '', '', '', '', '', formatCurrency(r.payable)],
+        ['К выплате наличными:', '', '', '', '', '', formatCurrency(r.payableCash)],
+        [`Всего выполнено работ на сумму: ${formatCurrency(r.totalWithoutVat)} руб.`],
+        [toWords(r.totalWithoutVat)],
+      ]
 
-    const blob = new Blob([xml], {
-      type: 'application/vnd.ms-excel;charset=utf-8;',
+      const sheetData = [
+        [`Акт № ${r.actNumber}`],
+        [`Объект: ${r.object}`],
+        [''],
+        tableHeader,
+        ...materialRows,
+        ...workRows,
+        ...totals,
+      ]
+
+      const worksheet = XLSX.utils.aoa_to_sheet(sheetData)
+      XLSX.utils.book_append_sheet(workbook, worksheet, `Акт ${idx + 1}`)
+    })
+
+    const data = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' })
+    const blob = new Blob([data], {
+      type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
     })
     const url = URL.createObjectURL(blob)
     const link = document.createElement('a')
