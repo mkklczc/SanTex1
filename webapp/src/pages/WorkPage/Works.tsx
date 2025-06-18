@@ -1,9 +1,8 @@
-import { Button, Input, Table, Select, Modal } from 'antd'
+import { Button, Input, Table, Select } from 'antd'
 import type { ColumnsType } from 'antd/es/table'
 import { useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 import Layout from '../../components/Layout/Layout'
-import layoutStyles from '../../components/Layout/Layout.module.less'
 import { getNewWorkRoute } from '../../lib/routes'
 import { trpc } from '../../lib/trpc'
 import styles from './styles/Works.module.less'
@@ -20,7 +19,9 @@ export const WorksPage = () => {
     if (!works) {
       return []
     }
-    const unique = Array.from(new Set(works.map((w) => w.constructionObject.name)))
+    const unique = Array.from(
+      new Set(works.map((w: { constructionObject: { name: string } }) => w.constructionObject.name))
+    )
     return unique.map((name) => ({ label: name, value: name }))
   }, [works])
 
@@ -28,7 +29,7 @@ export const WorksPage = () => {
     if (!works) {
       return []
     }
-    const unique = Array.from(new Set(works.map((w) => w.status)))
+    const unique = Array.from(new Set(works.map((w: { status: string }) => w.status)))
     return unique.map((s) => ({ label: s, value: s }))
   }, [works])
 
@@ -68,18 +69,7 @@ export const WorksPage = () => {
       title: 'Действия',
       key: 'actions',
       render: (_, record) => (
-        <Button
-          danger
-          size="small"
-          onClick={() =>
-            Modal.confirm({
-              title: `Удалить работу ${record.description}?`,
-              okText: 'Да',
-              cancelText: 'Нет',
-              onOk: () => deleteMutation.mutate({ id: record.id }),
-            })
-          }
-        >
+        <Button danger size="small" onClick={() => deleteMutation.mutate({ id: record.id })}>
           Удалить
         </Button>
       ),
@@ -87,8 +77,7 @@ export const WorksPage = () => {
   ]
 
   return (
-    <Layout withBackground>
-      <h1 className={layoutStyles.titletwo}>Работы</h1>
+    <Layout>
       <div className={styles.container}>
         <div className={styles.header}>
           <Input.Search
@@ -96,21 +85,21 @@ export const WorksPage = () => {
             placeholder="Поиск"
             allowClear
             onSearch={setSearch}
-            onChange={(e) => setSearch(e.target.value)}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearch(e.target.value)}
           />
           <Select
             allowClear
             placeholder="Объект"
             options={objectOptions}
             style={{ width: 150, marginRight: 8 }}
-            onChange={(v) => setObjectFilter(v || null)}
+            onChange={(v: string | null) => setObjectFilter(v || null)}
           />
           <Select
             allowClear
             placeholder="Статус"
             options={statusOptions}
             style={{ width: 150, marginRight: 8 }}
-            onChange={(v) => setStatusFilter(v || null)}
+            onChange={(v: string | null) => setStatusFilter(v || null)}
           />
           <Link to={getNewWorkRoute()}>
             <Button type="primary">Добавить работу</Button>

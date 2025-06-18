@@ -3,23 +3,23 @@ import type { ColumnsType } from 'antd/es/table'
 import { useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 import Layout from '../../components/Layout/Layout'
-import { getEditEquipmentRoute, getNewEquipmentRoute } from '../../lib/routes'
+import { getEditMaterialRoute, getNewMaterialsRoute } from '../../lib/routes'
 import { trpc } from '../../lib/trpc'
-import styles from './styles/Equipment.module.less'
+import styles from './styles/Materials.module.less'
 
-export const AllEquipmentPage = () => {
-  const { data: equipment, refetch } = trpc.equipment.list.useQuery()
-  const deleteMutation = trpc.equipment.delete.useMutation({
+export const MaterialsPage = () => {
+  const { data: materials, refetch } = trpc.materials.list.useQuery()
+  const deleteMutation = trpc.materials.delete.useMutation({
     onSuccess: () => refetch(),
   })
   const [search, setSearch] = useState('')
 
   const filtered = useMemo(() => {
-    if (!equipment) {
+    if (!materials) {
       return []
     }
-    return equipment.filter((e: { name: string }) => e.name.toLowerCase().includes(search.toLowerCase()))
-  }, [equipment, search])
+    return materials.filter((m) => m.name.toLowerCase().includes(search.toLowerCase()))
+  }, [materials, search])
 
   const columns: ColumnsType<(typeof filtered)[number]> = [
     { title: 'Название', dataIndex: 'name', key: 'name' },
@@ -27,8 +27,6 @@ export const AllEquipmentPage = () => {
     { title: 'Производитель', dataIndex: 'manufacturer', key: 'manufacturer' },
     { title: 'Ед.', dataIndex: 'unit', key: 'unit', width: 80 },
     { title: 'Цена', dataIndex: 'unitPrice', key: 'unitPrice', width: 100 },
-    { title: 'Количество', dataIndex: 'quantity', key: 'quantity', width: 100 },
-    { title: 'Статус', dataIndex: 'status', key: 'status', width: 100 },
     {
       title: 'Тэги',
       dataIndex: 'tags',
@@ -46,7 +44,7 @@ export const AllEquipmentPage = () => {
       key: 'actions',
       render: (_, record) => (
         <Space>
-          <Link to={getEditEquipmentRoute({ equipmentId: record.id })}>Редактировать</Link>
+          <Link to={getEditMaterialRoute({ materialId: record.id })}>Редактировать</Link>
           <Button danger size="small" onClick={() => deleteMutation.mutate({ id: record.id })}>
             Удалить
           </Button>
@@ -66,8 +64,8 @@ export const AllEquipmentPage = () => {
             onSearch={setSearch}
             onChange={(e) => setSearch(e.target.value)}
           />
-          <Link to={getNewEquipmentRoute()}>
-            <Button type="primary">Добавить оборудование</Button>
+          <Link to={getNewMaterialsRoute()}>
+            <Button type="primary">Добавить материал</Button>
           </Link>
         </div>
         <div className={styles.table}>
@@ -78,4 +76,4 @@ export const AllEquipmentPage = () => {
   )
 }
 
-export default AllEquipmentPage
+export default MaterialsPage

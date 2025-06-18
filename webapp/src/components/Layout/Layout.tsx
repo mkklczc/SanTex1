@@ -18,10 +18,9 @@ const { Sider, Content } = AntLayout
 
 type ILayout = {
   children: ReactNode
-  withBackground?: boolean
 }
 
-export const Layout: React.FC<ILayout> = ({ children, withBackground = false }) => {
+export const Layout: React.FC<ILayout> = ({ children }) => {
   const location = useLocation()
   const navigate = useNavigate()
   const [collapsed, setCollapsed] = useState(false)
@@ -53,7 +52,7 @@ export const Layout: React.FC<ILayout> = ({ children, withBackground = false }) 
   }, [])
 
   return (
-    <AntLayout className={`${styles.layout} ${withBackground ? styles.background : ''}`.trim()}>
+    <AntLayout className={styles.layout}>
       <Sider
         className={styles.layout__header}
         collapsible

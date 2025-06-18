@@ -13,11 +13,11 @@ export const trpcRouter = trpc.router({
   // @index('./**/index.ts', f => `${f.path.split('/').slice(0, -1).pop()}: ${f.path.split('/').slice(0, -1).pop()}TrpcRoute,`)
   auth: authTrpcRoute,
   hello: helloTrpcRoute,
-  materials: materialsTrpcRoute,
   equipment: equipmentTrpcRoute,
   works: worksTrpcRoute,
   objects: objectsTrpcRoute,
   dashboard: dashboardTrpcRoute,
+  materials: materialsTrpcRoute,
   // @endindex
 })
 

@@ -1,7 +1,6 @@
 import { Button, Form, Input } from 'antd'
 import { useNavigate } from 'react-router-dom'
 import Layout from '../../components/Layout/Layout'
-import layoutStyles from '../../components/Layout/Layout.module.less'
 import { trpc } from '../../lib/trpc'
 import formStyles from './styles/EquipmentForm.module.less'
 
@@ -33,7 +32,6 @@ export const NewEquipmentPage = () => {
 
   return (
     <Layout>
-      <h1 className={layoutStyles.titletwo}>Добавить оборудование</h1>
       <Form layout="vertical" onFinish={onFinish} className={formStyles.formWrapper}>
         <Form.Item label="Название" name="name" rules={[{ required: true }]}>
           <Input />
@@ -47,31 +45,11 @@ export const NewEquipmentPage = () => {
         <Form.Item label="Ед." name="unit" rules={[{ required: true }]}>
           <Input />
         </Form.Item>
-        <Form.Item
-          label="Цена"
-          name="unitPrice"
-          rules={[
-            { required: true, message: 'Обязательное поле' },
-            {
-              validator: (_, value) =>
-                value > 0 ? Promise.resolve() : Promise.reject(new Error('Цена должна быть больше 0')),
-            },
-          ]}
-        >
-          <Input type="number" min={0} />
+        <Form.Item label="Цена" name="unitPrice" rules={[{ required: true }]}>
+          <Input type="number" />
         </Form.Item>
-        <Form.Item
-          label="Количество"
-          name="quantity"
-          rules={[
-            { required: true, message: 'Обязательное поле' },
-            {
-              validator: (_, value) =>
-                value > 0 ? Promise.resolve() : Promise.reject(new Error('Количество должно быть больше 0')),
-            },
-          ]}
-        >
-          <Input type="number" min={0} />
+        <Form.Item label="Количество" name="quantity" rules={[{ required: true }]}>
+          <Input type="number" />
         </Form.Item>
         <Form.Item label="Статус" name="status" rules={[{ required: true }]}>
           <Input />
