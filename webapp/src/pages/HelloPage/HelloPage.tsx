@@ -3,7 +3,6 @@ import { Card, List, Statistic } from 'antd'
 import dayjs from 'dayjs'
 import Iconka from '../../assets/Iconka.svg?react'
 import Layout from '../../components/Layout/Layout'
-import layoutStyles from '../../components/Layout/Layout.module.less'
 import { trpc } from '../../lib/trpc'
 import styles from './HelloPage.module.less'
 
@@ -32,9 +31,8 @@ export const HelloPage = () => {
     <Layout withBackground>
       <div className={styles.titleWrapper}>
         <div className={styles.bigLogo}>
-          <Iconka />
+          <Iconka style={{ height: '150px', width: '150px' }} />
         </div>
-        <h1 className={layoutStyles.titletwo}>Учет ресурсов и управления производственными процессами компании</h1>
       </div>
       <div className={styles.header}>
         {/* <div className={styles.logo}>
@@ -96,5 +94,3 @@ export const HelloPage = () => {
     </Layout>
   )
 }
-
-export default HelloPage

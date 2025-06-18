@@ -107,6 +107,7 @@ a {
         padding: 20px 30px;
         background-color: white;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        margin-top: 40px;
 
         @media (max-width: @breakpoint) {
             padding: 15px;
@@ -123,11 +124,23 @@ a {
 }
 
 .titletwo {
-    font-size: 30px;
-    font-weight: 600;
-    margin-bottom: 20px;
-    color: #050c12;
+    position: absolute;
+    top: 20px;
+    left: 0;
+    right: 0;
     text-align: center;
+    color: #fff;
+    z-index: 1;
+}
+
+.overlayTitle {
+    position: absolute;
+    top: 20px;
+    left: 0;
+    right: 0;
+    text-align: center;
+    color: #fff;
+    z-index: 1;
 }
 
 .background {

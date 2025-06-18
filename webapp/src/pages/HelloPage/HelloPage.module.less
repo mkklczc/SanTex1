@@ -4,20 +4,33 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: @spacing-md;
+  margin-bottom: @spacing-lg;
+  background: linear-gradient(135deg, #6a11cb, #2575fc);
+  padding: 20px;
+  border-radius: 8px;
+  position: relative;
 
   .logo {
     display: flex;
     align-items: center;
-
     svg {
-      height: 40px;
+      height: 150px;
+      width: 150px;
+      transition: transform 0.3s ease;
+      &:hover {
+        transform: scale(1.1);
+      }
     }
   }
 
   .date {
-    font-size: @font-size-lg;
-    color: @text-light;
+    font-size: @font-size-xl;
+    color: #fff;
+    font-weight: bold;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
   }
 }
 
@@ -25,12 +38,16 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: @spacing-md;
-  margin-bottom: @spacing-md;
+  gap: @spacing-lg;
+  margin-bottom: 20px;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 12px;
+  padding: 20px;
 
   .bigLogo {
     svg {
-      height: 80px;
+      height: 100px; /* увеличил размер логотипа */
+      filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1));
     }
   }
 }
@@ -38,20 +55,68 @@
 .dashboard {
   display: flex;
   gap: @spacing-md;
-  margin-bottom: @spacing-lg;
-
-.ant-statistic-title,
-  .ant-statistic-content-value {
-    color: @titleColor;
-  }
+  margin-bottom: @spacing-xl;
+  justify-content: space-between; /* добавлено для выравнивания карт */
 
   .card {
     flex: 1;
+    background: #fff;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    padding: 24px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* плавный переход для тени */
+    margin-right: 10px; /* увеличен отступ между картами */
+    &:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+    }
+
+    .ant-statistic-title,
+    .ant-statistic-content-value {
+      color: @titleColor;
+      font-weight: bold;
+    }
+
+    .ant-statistic-content {
+      font-size: 32px; /* уменьшил размер шрифта для чисел */
+      font-weight: bold;
+      color: #fc8231;
+    }
   }
 }
 
 .notifications {
+  margin-top: 0;
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+
   h2 {
     margin-bottom: @spacing-sm;
+    font-size: @font-size-lg;
+    color: @primaryColor;
+    font-weight: bold;
+  }
+
+  .ant-list-item {
+    padding: 12px 0;
+    font-size: @font-size-md;
+    border-bottom: 1px solid #eaeaea;
+
+    &:last-child {
+      border-bottom: none;
+    }
+
+    span {
+      color: #fc8231;
+      font-weight: bold;
+    }
+
+    &:hover {
+      background-color: #f9f9f9;
+      transform: translateX(5px);
+      transition: transform 0.2s ease-in-out;
+    }
   }
 }
