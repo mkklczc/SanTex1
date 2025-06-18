@@ -1,4 +1,4 @@
-import { UserOutlined, LogoutOutlined, MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons'
+import { LogoutOutlined, MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons'
 import { Layout as AntLayout, Tooltip, Button } from 'antd'
 import React, { ReactNode, useState, useEffect } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
@@ -9,7 +9,6 @@ import {
   getWorksRoute,
   getObjectsRoute,
   getReportsRoute,
-  getSettingsRoute,
 } from '../../lib/routes'
 
 import styles from './Layout.module.less'
@@ -99,17 +98,8 @@ export const Layout: React.FC<ILayout> = ({ children }) => {
           >
             Отчёты
           </Link>
-          <Link
-            to={getSettingsRoute()}
-            className={`${styles.layout__navItem} ${location.pathname === getSettingsRoute() ? styles.layout__navItem_active : ''}`}
-          >
-            Настройки
-          </Link>
         </div>
         <div style={{ display: 'flex', alignItems: 'center' }}>
-          <div className={styles.layout__user}>
-            <UserOutlined />
-          </div>
           <div className={styles.layout__user} onClick={handleLogout}>
             <Tooltip title="Выйти">
               <LogoutOutlined />

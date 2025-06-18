@@ -2,7 +2,6 @@ import { Button, Card, Input } from 'antd'
 import { useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 import Layout from '../../components/Layout/Layout'
-import layoutStyles from '../../components/Layout/Layout.module.less'
 import { getEditObjectRoute, getNewObjectRoute } from '../../lib/routes'
 import { trpc } from '../../lib/trpc'
 import styles from './styles/Objects.module.less'
@@ -21,7 +20,6 @@ export const ObjectsPage = () => {
 
   return (
     <Layout>
-      <h1 className={layoutStyles.titletwo}>Объекты</h1>
       <div className={styles.container}>
         <div className={styles.header}>
           <Input.Search

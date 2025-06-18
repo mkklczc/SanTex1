@@ -1,4 +1,4 @@
-import { Button, Input, Space, Table, Tag } from 'antd'
+import { Button, Input, Space, Table, Tag, Select } from 'antd'
 import type { ColumnsType } from 'antd/es/table'
 import { useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
@@ -13,13 +13,36 @@ export const AllEquipmentPage = () => {
     onSuccess: () => refetch(),
   })
   const [search, setSearch] = useState('')
+  const [statusFilter, setStatusFilter] = useState<string | null>(null)
+  const [tagFilter, setTagFilter] = useState<string[]>([])
+
+  const statusOptions = useMemo(() => {
+    if (!equipment) {
+      return []
+    }
+    const unique = Array.from(new Set(equipment.map((e: { status: string }) => e.status)))
+    return unique.map((s) => ({ label: s, value: s }))
+  }, [equipment])
+
+  const tagOptions = useMemo(() => {
+    if (!equipment) {
+      return []
+    }
+    const unique = Array.from(new Set(equipment.flatMap((e: { tags: string[] }) => e.tags)))
+    return unique.map((t) => ({ label: t, value: t }))
+  }, [equipment])
 
   const filtered = useMemo(() => {
     if (!equipment) {
       return []
     }
-    return equipment.filter((e: { name: string }) => e.name.toLowerCase().includes(search.toLowerCase()))
-  }, [equipment, search])
+    return equipment.filter((e: { name: string; status: string; tags: string[] }) => {
+      const matchName = e.name.toLowerCase().includes(search.toLowerCase())
+      const matchStatus = statusFilter ? e.status === statusFilter : true
+      const matchTags = tagFilter.length > 0 ? tagFilter.every((t) => e.tags.includes(t)) : true
+      return matchName && matchStatus && matchTags
+    })
+  }, [equipment, search, statusFilter, tagFilter])
 
   const columns: ColumnsType<(typeof filtered)[number]> = [
     { title: 'Название', dataIndex: 'name', key: 'name' },
@@ -65,6 +88,22 @@ export const AllEquipmentPage = () => {
             allowClear
             onSearch={setSearch}
             onChange={(e) => setSearch(e.target.value)}
+          />
+          <Select
+            allowClear
+            placeholder="Статус"
+            options={statusOptions}
+            style={{ width: 150, marginRight: 8 }}
+            onChange={(v: string | null) => setStatusFilter(v || null)}
+          />
+          <Select
+            mode="multiple"
+            allowClear
+            placeholder="Тэги"
+            options={tagOptions}
+            style={{ minWidth: 200, marginRight: 8 }}
+            value={tagFilter}
+            onChange={(v) => setTagFilter(v)}
           />
           <Link to={getNewEquipmentRoute()}>
             <Button type="primary">Добавить оборудование</Button>
