@@ -20,7 +20,7 @@ export const LoginPage = () => {
       storage.setItem('full_name', response.user.full_name)
       storage.setItem('user_id', response.user.id)
 
-      navigate('/') // или /my-tickets — куда по роли решим позже
+      navigate('/')
     } catch (error) {
       console.error(error)
       form.setFields([

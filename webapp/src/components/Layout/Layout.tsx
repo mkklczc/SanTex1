@@ -33,20 +33,15 @@ export const Layout: React.FC<ILayout> = ({ children }) => {
   const handleCollapse = (collapsed: boolean) => {
     setCollapsed(collapsed)
   }
-
-  // Handle window resize
   useEffect(() => {
     const handleResize = () => {
-      setIsMobile(window.innerWidth <= 992) // Adjust this width according to your design needs
+      setIsMobile(window.innerWidth <= 992)
     }
 
-    // Initialize the state on component mount
     handleResize()
 
-    // Add event listener on window resize
     window.addEventListener('resize', handleResize)
 
-    // Clean up the event listener when component unmounts
     return () => window.removeEventListener('resize', handleResize)
   }, [])
 
@@ -119,11 +114,11 @@ export const Layout: React.FC<ILayout> = ({ children }) => {
               position: 'absolute',
               top: 16,
               left: 16,
-              fontSize: '20px', // Smaller icon size
+              fontSize: '20px',
               marginLeft: '-13px',
-              color: 'white', // White color for the icon
-              background: 'transparent', // Transparent background to make it less intrusive
-              border: 'none', // Remove the button border
+              color: 'white',
+              background: 'transparent',
+              border: 'none',
             }}
           />
         </div>
