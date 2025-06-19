@@ -2,6 +2,7 @@ import { Button, Form, Input, DatePicker, Select } from 'antd'
 import { useNavigate } from 'react-router-dom'
 import Layout from '../../components/Layout/Layout'
 import { trpc } from '../../lib/trpc'
+import formStyles from './styles/WorkForm.module.less'
 
 type Work = {
   description: string
@@ -31,7 +32,8 @@ export const NewWorkPage = () => {
 
   return (
     <Layout>
-      <Form layout="vertical" onFinish={onFinish} style={{ maxWidth: 480 }}>
+      <h1 className="pageTitle">Добавить работу</h1>
+      <Form layout="vertical" onFinish={onFinish} className={formStyles.formWrapper}>
         <Form.Item label="Описание" name="description" rules={[{ required: true }]}>
           <Input.TextArea rows={3} />
         </Form.Item>

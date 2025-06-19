@@ -227,7 +227,7 @@ export const ReportsPage = () => {
         <p style="text-align: center;">сдачи-приемки выполненных работ</p>
         <p style="text-align: center;">по договору №17/02/24 от "17" февраля 2024 г.</p>
         <p style="text-align: right;">г. Санкт-Петербург ${dateStr}</p>
-        <p>ООО «МАРИГ Строй», именуемое в дальнейшем «Заказчик», и ИП Рутковский Михаил Георгиевич, именуемое в дальнейшем «Подрядчик», составили настоящий акт о том, что Исполнитель выполнил, а Заказчик принял следующие работы:</p>
+        <p>ООО X, именуемое в дальнейшем «Заказчик», и ИП P, именуемое в дальнейшем «Подрядчик», составили настоящий акт о том, что Исполнитель выполнил, а Заказчик принял следующие работы:</p>
         <p>Монтаж систем разделов ОВ и ВК, на объекте: ${r.object}</p>
         <table border="1" cellspacing="0" cellpadding="4" style="border-collapse: collapse; width: 100%; margin-top: 8px;">
           <tr>
@@ -335,6 +335,7 @@ export const ReportsPage = () => {
   return (
     <Layout>
       <div className={styles.container}>
+        <h1 className="pageTitle">Отчёты</h1>
         <div className={styles.header}>
           <Form form={form} layout="inline" onFinish={onAdd} className={styles.form}>
             <Form.Item name="object" rules={[{ required: true, message: 'Объект' }]}>

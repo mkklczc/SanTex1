@@ -81,6 +81,7 @@ export const AllEquipmentPage = () => {
   return (
     <Layout>
       <div className={styles.container}>
+        <h1 className="pageTitle">Оборудование</h1>
         <div className={styles.header}>
           <Input.Search
             className={styles.search}

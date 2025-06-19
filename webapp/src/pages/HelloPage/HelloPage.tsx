@@ -28,12 +28,13 @@ export const HelloPage = () => {
   }
 
   return (
-    <Layout withBackground>
+    <Layout>
       <div className={styles.titleWrapper}>
         <div className={styles.bigLogo}>
           <Iconka style={{ height: '150px', width: '150px' }} />
         </div>
       </div>
+      <h1 className="pageTitle">Учет ресурсов и управления производственными процессами</h1>
       <div className={styles.header}>
         {/* <div className={styles.logo}>
           <Iconka />

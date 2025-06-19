@@ -33,6 +33,7 @@ export const EditMaterialPage = () => {
 
   return (
     <Layout>
+      <h1 className="pageTitle">Редактировать материал</h1>
       <Form
         layout="vertical"
         onFinish={onFinish}

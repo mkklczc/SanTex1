@@ -30,6 +30,7 @@ export const NewMaterialPage = () => {
 
   return (
     <Layout>
+      <h1 className="pageTitle">Добавить материал</h1>
       <Form layout="vertical" onFinish={onFinish} className={formStyles.formWrapper}>
         <Form.Item label="Название" name="name" rules={[{ required: true, message: 'Обязательное поле' }]}>
           <Input />

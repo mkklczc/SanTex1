@@ -69,6 +69,7 @@ export const MaterialsPage = () => {
   return (
     <Layout>
       <div className={styles.container}>
+        <h1 className="pageTitle">Материалы</h1>
         <div className={styles.header}>
           <Input.Search
             className={styles.search}

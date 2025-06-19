@@ -10,5 +10,7 @@ export const hasRole = (roles: ('admin' | 'project_manager' | 'warehouse_manager
   })
 
 export const userProcedure = trpc.procedure.use(hasRole(['user']))
-export const operatorProcedure = trpc.procedure.use(hasRole(['admin' | 'project_manager']))
-export const chiefProcedure = trpc.procedure.use(hasRole(['chief']))
+export const adminProcedure = trpc.procedure.use(hasRole(['admin']))
+export const projectManagerProcedure = trpc.procedure.use(hasRole(['project_manager']))
+export const warehouseProcedure = trpc.procedure.use(hasRole(['warehouse_manager']))
+export const technicianProcedure = trpc.procedure.use(hasRole(['technician']))

@@ -30,6 +30,7 @@ export const NewObjectPage = () => {
 
   return (
     <Layout>
+      <h1 className="pageTitle">Добавить объект</h1>
       <Form layout="vertical" onFinish={onFinish} className={formStyles.formWrapper}>
         <Form.Item label="Название" name="name" rules={[{ required: true }]}>
           <Input />
